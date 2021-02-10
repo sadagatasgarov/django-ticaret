@@ -23,7 +23,8 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class ImagesAdmin(admin.ModelAdmin):
-    list_display = ['title', 'product', 'image']
+    list_display = ['title', 'product', 'image', 'image_tag']
+    readonly_fields = ('image_tag', )
 
 
 admin.site.register(Category, CategoryAdmin)
