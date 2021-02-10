@@ -1,44 +1,77 @@
-
 {% extends 'homebase.html' %}
-
 {% block title %} {{ setting.title }} {% endblock %}
 {% block description %} {{ setting.description }} {% endblock %}
-{% block keywords %} {{ setting.keywords }} {% endblock %}
-{% block head %} <link rel="icon"
-      type="image/png"
-      href="{{ setting.icon.url}}"> {% endblock %}
+{% block keywords %}{{ setting.keywords }}{% endblock %}
+{% block head %}
+<link rel="icon" type="image/png" href="{{ setting.icon.url}}" />
+{% endblock %}
+
 
 {% block sidebar %}
 {% include 'sidebar.html' %}
 {% endblock %}
 
-{% block slider %} 
-{% include 'slider.html' %} 
-{% endblock %}
 
 {% block content %}
 <!-- BREADCRUMB -->
-	<div id="breadcrumb">
-		<div class="container">
-			<ul class="breadcrumb">
-				<li> <a href="/"> Anasayfa </a> </li>
-				<li class="active">Iletisim</li>
-			</ul>
-		</div>
-	</div>
-	<!-- /BREADCRUMB -->
+<div id="breadcrumb">
+  <div class="container">
+    <ul class="breadcrumb">
+      <li><a href="/"> Anasayfa </a></li>
+      <li class="active">Iletisim</li>
+    </ul>
+  </div>
+</div>
+<!-- /BREADCRUMB -->
 
-	<!-- section -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div class="row">
-				{{setting.contact|safe}}
-			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /section -->
- {% endblock %}
+<!-- section -->
+<div class="section">
+  <!-- container -->
+  <div class="container">
+    <!-- row -->
+    <div class="row">
+      <div class="col-md-4">
+        <div class="billing-details">
+          <div class="section-title">
+            <h3 class="title">Iletisim formu</h3>
+            {% if messages %}
+			{% for message in messages %}
+            <div class="alert alert-{{message.tags}}" role="alert">
+              {{ message }}
+            </div>
+            {% endfor %}
+			{% endif %}
+          </div>
+          <form action="" method="POST">
+            <div class="form-group">
+            {% csrf_token %}
+			{{form.as_p}}
+            <input type="submit" value="SEND FORM" />
+          </div>
+
+          </form>
+
+
+          <div class="form-group"></div>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="shiping-methods">
+
+          <div class="section-title">
+            <h4 class="title">Shiping Methods</h4>
+          </div>
+          <div>
+			  {{setting.contact|safe}}
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- /row -->
+  </div>
+  <!-- /container -->
+</div>
+<!-- /section -->
+{% endblock %}
