@@ -10,18 +10,21 @@ from product.models import Product, Category
 def index(request):
     setting = Setting.objects.get(pk=1)
     sliderdata = Product.objects.all()[:5]
+    category = Category.objects.all()
     university = "Karabuk University"
     dept = "Computer Engineering"
     context = {'setting': setting,
-               'sliderdata': sliderdata
+               'sliderdata': sliderdata,
+               'category': category,
+               'page': 'hakkimizda'
                }
     return render(request, 'index.html', context)
 
 
 def hakkimizda(request):
-    setting = Setting.objects.get(pk=1)
-    context = {'setting': setting, 'page': 'hakkimizda'}
-    return render(request, 'hakkimizda.html', context)
+    settingh = Setting.objects.get(pk=1)
+    context = {'settingh': settingh}
+    return render(request, 'index.html', context)
 
 
 def referanslar(request):
@@ -48,5 +51,5 @@ def iletisim(request):
 
     setting = Setting.objects.get(pk=1)
     form = ContactForm()
-    context = {'setting': setting, 'page': 'hakkimizda', 'form': form}
+    context = {'setting': setting, 'form': form}
     return render(request, 'iletisim.html', context)

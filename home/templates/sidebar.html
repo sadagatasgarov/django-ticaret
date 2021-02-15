@@ -6,20 +6,41 @@
 			<div id="responsive-nav">
 				<!-- category nav -->
 			   {% if page  %}
-				<div class="category-nav show-on-click">
+				<div class="category-nav">
             	{% else %}
-					<div class="category-nav">
+					<div class="category-nav  show-on-click">
             	{% endif %}
-					<span class="category-header">Categories <i class="fa fa-list"></i></span>
+					<span class="category-header">Categories<i class="fa fa-list"></i></span>
+						{% load mptt_tags %}
 					<ul class="category-list">
+   					 	{% recursetree category %}
+    				    	<li class="dropdown side-dropdown">
+								<a href="/category/{{node.slug}}" class="dropdown-toggle" {% if not node.is_leaf_node %} data-toggle="dropdown"  aria-expanded="true" {% endif %}>
+									{{ node.title }}
+									{% if not node.is_leaf_node %} <i class="fa fa-angle-right"> </i> {% endif %}
+								</a>
+								{% if not node.is_leaf_node %}
+								<div class="custom-menu">
+									<div class="row">
+										<div class="col-md-4">
+													<ul class="list-links">
+														<li><a href="#">{{ children }}</a></li>
+													</ul>
+												<hr class="hidden-md hidden-lg">
+										</div>
+									</div>
+								</div>
+								{% endif %}
+     				   		</li>
+  					  	{% endrecursetree %}
+
 						<li class="dropdown side-dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women’s Clothing <i class="fa fa-angle-right"></i></a>
 							<div class="custom-menu">
 								<div class="row">
 									<div class="col-md-4">
 										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
+
 											<li><a href="#">Women’s Clothing</a></li>
 											<li><a href="#">Men’s Clothing</a></li>
 											<li><a href="#">{}{}{}</a></li>
@@ -28,6 +49,7 @@
 										</ul>
 										<hr class="hidden-md hidden-lg">
 									</div>
+
 									<div class="col-md-4">
 										<ul class="list-links">
 											<li>
