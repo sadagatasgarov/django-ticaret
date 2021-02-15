@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.contrib import messages
 # Create your views here.
 from home.models import Setting, ContactForm, ContactFormMassage
-from product.models import Product
+from product.models import Product, Category
 
 
 def index(request):
@@ -12,7 +12,9 @@ def index(request):
     sliderdata = Product.objects.all()[:5]
     university = "Karabuk University"
     dept = "Computer Engineering"
-    context = {'setting': setting, 'sliderdata': sliderdata}
+    context = {'setting': setting,
+               'sliderdata': sliderdata
+               }
     return render(request, 'index.html', context)
 
 
