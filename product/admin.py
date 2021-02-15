@@ -32,6 +32,7 @@ class ImagesAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin2(DraggableMPTTAdmin):
+    list_filter = ['status']
     prepopulated_fields = {'slug': ('title',)}
     mptt_indent_field = "title"
     list_display = ('tree_actions', 'indented_title',
@@ -59,12 +60,10 @@ class CategoryAdmin2(DraggableMPTTAdmin):
 
     def related_products_count(self, instance):
         return instance.products_count
-
     related_products_count.short_description = 'Related products (for this specific category)'
 
     def related_products_cumulative_count(self, instance):
         return instance.products_cumulative_count
-
     related_products_cumulative_count.short_description = 'Related products (in tree)'
 
 

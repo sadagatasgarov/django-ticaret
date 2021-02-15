@@ -25,9 +25,6 @@ class Category(MPTTModel):
     #     return self.title
 
     def image_tag(self):
-        if self.image.url is not None:
-            return ""
-        else:
             return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
 
     image_tag.short_description = 'Image'
@@ -67,9 +64,6 @@ class Product(models.Model):
         return self.title
 
     def image_tag(self):
-        if self.image.url is not None:
-            return ""
-        else:
             return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
 
     image_tag.short_description = 'Image'

@@ -8,7 +8,7 @@ from product.models import Product, Category
 
 
 def index(request):
-    setting = Setting.objects.get(pk=1)
+    setting = Setting.objects.get(pk=3)
     sliderdata = Product.objects.all()[:5]
     category = Category.objects.all()
     university = "Karabuk University"
@@ -22,20 +22,23 @@ def index(request):
 
 
 def hakkimizda(request):
-    settingh = Setting.objects.get(pk=1)
-    context = {'settingh': settingh}
+    category = Category.objects.all()
+    setting = Setting.objects.get(pk=3)
+    context = {'setting': setting, 'category': category}
     return render(request, 'index.html', context)
 
 
 def referanslar(request):
-    setting = Setting.objects.get(pk=1)
+    category = Category.objects.all()
+    setting = Setting.objects.get(pk=3)
     context = {'setting': setting,
-               'page': 'hakkimizda'
+               'category': category
                }
     return render(request, 'referanslar.html', context)
 
 
 def iletisim(request):
+    category = Category.objects.all()
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -49,7 +52,19 @@ def iletisim(request):
             messages.success(request, "Mesajiniz basari ile gonderilmistir")
             return HttpResponseRedirect('/iletisim')
 
-    setting = Setting.objects.get(pk=1)
+    setting = Setting.objects.get(pk=3)
     form = ContactForm()
-    context = {'setting': setting, 'form': form}
+    context = {'setting': setting,
+                'category': category,
+               'form': form}
     return render(request, 'iletisim.html', context)
+
+
+def category_products(request, id, slug):
+    products = Product.objects.filter(category_id=id)
+    category = Category.objects.all()
+    categorydata = Category.objects.get(pk=id)
+    context={ 'category': category,
+              'products': products,
+              'categorydata': categorydata}
+    return render(request, 'products.html', context)
