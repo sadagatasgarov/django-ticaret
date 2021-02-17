@@ -25,7 +25,7 @@ def hakkimizda(request):
     category = Category.objects.all()
     setting = Setting.objects.get(pk=3)
     context = {'setting': setting, 'category': category}
-    return render(request, 'index.html', context)
+    return render(request, 'hakkimizda.html', context)
 
 
 def referanslar(request):
