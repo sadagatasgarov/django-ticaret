@@ -11,12 +11,18 @@ def index(request):
     setting = Setting.objects.get(pk=3)
     sliderdata = Product.objects.all()[:5]
     category = Category.objects.all()
+    dayproduct = Product.objects.all()[:4]
+    lastproduct = Product.objects.all().order_by('-id')[:4]
+    randomproduct = Product.objects.all().order_by('?')[:4]
     university = "Karabuk University"
     dept = "Computer Engineering"
     context = {'setting': setting,
                'sliderdata': sliderdata,
                'category': category,
-               'page': 'hakkimizda'
+               'page': 'hakkimizda',
+               'dayproduct': dayproduct,
+               'lastproduct':lastproduct,
+               'randomproduct':randomproduct
                }
     return render(request, 'index.html', context)
 
