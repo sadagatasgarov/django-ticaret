@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.contrib import messages
 # Create your views here.
 from home.models import Setting, ContactForm, ContactFormMassage
-from product.models import Product, Category
+from product.models import Product, Category, Images
 
 
 def index(request):
@@ -21,8 +21,8 @@ def index(request):
                'category': category,
                'page': 'hakkimizda',
                'dayproduct': dayproduct,
-               'lastproduct':lastproduct,
-               'randomproduct':randomproduct
+               'lastproduct': lastproduct,
+               'randomproduct': randomproduct
                }
     return render(request, 'index.html', context)
 
@@ -61,7 +61,7 @@ def iletisim(request):
     setting = Setting.objects.get(pk=3)
     form = ContactForm()
     context = {'setting': setting,
-                'category': category,
+               'category': category,
                'form': form}
     return render(request, 'iletisim.html', context)
 
@@ -70,7 +70,18 @@ def category_products(request, id, slug):
     products = Product.objects.filter(category_id=id)
     category = Category.objects.all()
     categorydata = Category.objects.get(pk=id)
-    context={ 'category': category,
-              'products': products,
-              'categorydata': categorydata}
+    context = {'category': category,
+               'products': products,
+               'categorydata': categorydata}
     return render(request, 'products.html', context)
+
+
+def product_detail(request, id, slug):
+    category = Category.objects.all()
+    product_detail = Product.objects.get(pk=id)
+    image = Images.objects.filter(product_id=id)
+    context = {'category': category,
+               'product_detail': product_detail,
+               'image':image
+               }
+    return render(request, 'product_detail.html', context)
