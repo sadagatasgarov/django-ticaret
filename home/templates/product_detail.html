@@ -76,7 +76,7 @@
 								</div>
 								<a href="#">3 Review(s) / Add Review</a>
 							</div>
-							<p><strong>Availability:</strong> In Stock</p>
+							<p><strong>Availability:</strong> {{product_detail.amount}}</p>
 							<p><strong>Brand:</strong> E-SHOP</p>
 							<p>{{product_detail.description}}</p>
 
@@ -84,7 +84,7 @@
 							<div class="product-btns">
 								<div class="qty-input">
 									<span class="text-uppercase">QTY: </span>
-									<input class="input" type="number" min="0" value="1" />
+									<input class="input" type="number" max="{{product_detail.amount}}" value="1" />
 								</div>
 								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 								<div class="pull-right">
