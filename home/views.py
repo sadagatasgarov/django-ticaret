@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.contrib import messages
 # Create your views here.
 from home.models import Setting, ContactForm, ContactFormMassage
-from product.models import Product, Category, Images
+from product.models import Product, Category, Images, Comment
 
 
 def index(request):
@@ -80,8 +80,10 @@ def product_detail(request, id, slug):
     category = Category.objects.all()
     product_detail = Product.objects.get(pk=id)
     image = Images.objects.filter(product_id=id)
+    comments = Comment.objects.filter(product_id=id, status=True)
     context = {'category': category,
                'product_detail': product_detail,
-               'image':image
+               'image': image,
+               'comments': comments
                }
     return render(request, 'product_detail.html', context)
