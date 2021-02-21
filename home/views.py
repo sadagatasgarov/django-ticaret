@@ -99,8 +99,11 @@ def product_search(request):
         if form.is_valid():
             category = Category.objects.all()
             query = form.cleaned_data['query']
-            products = Product.objects.filter(title__icontains=query)
-
+            catid = form.cleaned_data['catid']
+            if catid==0:
+                products = Product.objects.filter(title__icontains=query)
+            else:
+                products = Product.objects.filter(title__icontains=query, category_id=catid)
             context = {'products': products,
                        'category': category}
             return render(request, 'product_search.html', context)
