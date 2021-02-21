@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.contrib import messages
 # Create your views here.
 import product
-from home.forms import SearchForm
+from home.forms import SearchForm, SignupForm
 from home.models import Setting, ContactForm, ContactFormMassage
 from product.models import Product, Category, Images, Comment
 
@@ -141,14 +141,32 @@ def login_view(request):
         if user is not None:
             login(request, user)
             # Redirect to a success page.
-           
+
             return HttpResponseRedirect('/')
         else:
             # Return an 'invalid login' error message.
-             messages.success(request, "Login hatasi sifre ve ya kullanici adi hatali")
-             return HttpResponseRedirect('/login')
+            messages.success(request, "Login hatasi sifre ve ya kullanici adi hatali")
+            return HttpResponseRedirect('/login')
 
     category = Category.objects.all()
     context = {'category': category}
     return render(request, 'login.html', context)
 
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = request.POST['username']
+            password = request.POST['password1']
+            user = authenticate(request, username=username, password=password)
+            login(request, user)
+            return HttpResponseRedirect('/')
+
+    form = SignupForm()
+    category = Category.objects.all()
+    context = {'category': category,
+               'form': form
+               }
+    return render(request, 'signup.html', context)

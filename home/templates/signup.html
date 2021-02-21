@@ -44,17 +44,21 @@
 			{% endif %}
 
           </div>
-          <form action="" method="POST">
-            <div class="form-group">
+          <form method="post">
             {% csrf_token %}
-			<div class="form-group">
-                <input class="input" type="text" name="username" placeholder="First Name">
-            </div>
-            <div class="form-group">
-                <input class="input" type="password" name="password" placeholder="Last Name">
-            </div>
+              {% for field in form %}
+                  <p>
+                    {{field.label_tag}} <br>
+                    {{field}}
+                      {% if field.help_text %}
+                         <small style="color: grey">{{ field.help_text }}</small>
+                      {% endif %}
+                     {% for error in field.errors %}
+                      <p style="color: red"> {{error}}</p>
+                     {% endfor %}
+                  </p>
+              {% endfor %}
             <input type="submit" value="Giris Yap" />
-          </div>
 
           </form>
         </div>
