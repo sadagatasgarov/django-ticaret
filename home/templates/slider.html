@@ -6,16 +6,15 @@
 			<!-- home wrap -->
 			<div class="home-wrap">
 				<!-- home slick -->
-				<div id="home-slick">
+				<div id="home-slick"  >
 					<!-- banner -->
 					{% for rs in sliderdata %}
 						{% if rs.image.url is None %}
-						<div class="banner banner-1" style="display: block;">
+							<div class="banner banner-1" style="display: block;">
 						{% else %}
-						<div class="banner banner-1">
-					{% endif %}
-
-						<img src="{{rs.image.url}}" alt="">
+							<div class="banner banner-1" >
+						{% endif %}
+						<img src="{{rs.image.url}}" alt="" style="max-height: 500px;">
 						<div class="banner-caption text-center">
 							<h1>{{ rs.title }}</h1>
 							<h3 class="white-color font-weak">{{rs.description}}</h3>

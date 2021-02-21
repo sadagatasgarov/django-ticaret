@@ -3,6 +3,7 @@ from pyexpat import model
 from django.contrib.auth.models import User
 from django.db import models
 from django.forms import ModelForm
+from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 # Create your models here.
 from django.utils.safestring import mark_safe
@@ -21,7 +22,7 @@ class Category(MPTTModel):
     description = models.CharField(max_length=255)
     image = models.ImageField(blank=True, upload_to='images/')
     status = models.CharField(max_length=10, choices=STATUS)
-    slug = models.SlugField(max_length=150, blank=True)
+    slug = models.SlugField(blank=False, unique=True)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
 
@@ -45,6 +46,12 @@ class Category(MPTTModel):
         order_insertion_by = ['title']
 
 
+    def get_absolute_url(self):
+        return reverse('category_detail', kwargs={'slug': self.slug})
+
+
+
+
 class Product(models.Model):
     STATUS = (
         ('True', 'True'),
@@ -59,7 +66,7 @@ class Product(models.Model):
     amount = models.IntegerField()
     minamount = models.IntegerField()
     detail = RichTextUploadingField()
-    slug = models.SlugField(max_length=150, blank=True)
+    slug = models.SlugField(blank=False, unique=True)
     status = models.CharField(max_length=10, choices=STATUS)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
@@ -73,6 +80,11 @@ class Product(models.Model):
     image_tag.short_description = 'Image'
     # method to create a fake table field in read only mode
 
+    def catimg_tag(self):
+        return mark_safe((Category.status))
+
+    def get_absolute_url(self):
+        return reverse('product_detail', kwargs={'slug': self.slug})
 
 class Images(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
