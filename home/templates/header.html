@@ -1,5 +1,10 @@
 {% load static %}
-	<!-- HEADER -->
+<!-- jQuery !-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
+<!-- jQuery UI !-->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<!-- HEADER -->
 	<header>
 		<!-- top Header -->
 		<div id="top-header">
@@ -45,11 +50,30 @@
 						</a>
 					</div>
 					<!-- /Logo -->
+<script>
 
+  $(function() {
+    $("#query").autocomplete({
+      source: "/search_auto/",
+      select: function (event, ui) { //item selected
+        AutoCompleteSelectHandler(event, ui)
+      },
+      minLength: 2,
+    });
+  });
+
+  function AutoCompleteSelectHandler(event, ui)
+  {
+    var selectedObj = ui.item;
+  }
+
+</script>
 					<!-- Search -->
 					<div class="header-search">
-						<form>
-							<input class="input search-input" type="text" placeholder="Enter your keyword">
+
+						<form action="/search/" method="post" >
+							{% csrf_token %}
+							<input id="query" name="query" class="input search-input" type="text" placeholder="Enter your keyword">
 							<select class="input search-categories">
 								<option value="0">All Categories</option>
 								<option value="1">Category 01</option>
@@ -57,6 +81,7 @@
 							</select>
 							<button class="search-btn"><i class="fa fa-search"></i></button>
 						</form>
+
 					</div>
 					<!-- /Search -->
 				</div>

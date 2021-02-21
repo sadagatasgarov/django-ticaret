@@ -33,6 +33,8 @@ urlpatterns = [
                   path('product/<int:id>/<slug:slug>/', views.product_detail, name='product_detail'),
                   path('admin/', admin.site.urls),
                   path('ckeditor/', include('ckeditor_uploader.urls')),
+                  path('search/', views.product_search, name='product_search'),
+                  path('search_auto/', views.product_search_auto, name='product_search_auto')
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:  # new

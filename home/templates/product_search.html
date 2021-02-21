@@ -1,0 +1,58 @@
+{% extends 'homebase.html' %}
+{% block title %} {{ setting.title }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %}{{ setting.keywords }}{% endblock %}
+{% block head %}
+<link rel="icon" type="image/png" href="{{ setting.icon.url}}" />
+{% endblock %}
+
+
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+<!-- BREADCRUMB -->
+<div id="breadcrumb">
+  <div class="container">
+    <ul class="breadcrumb">
+      <li><a href="/"> Anasayfa </a></li>
+      <li class="active">
+        Arama Sonuclari
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- /BREADCRUMB -->
+
+	<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+              <table cellpadding="3" width="1300">
+                <tr>
+                  <th>Image</th>
+                  <th>Product Name</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                </tr>
+                {% for rs in products %}
+
+                <tr>
+                  <td><a href="/product/{{rs.id}}/{{rs.slug}}"></a> <img src="{{rs.image.url}}" alt=""></td>
+                  <td><h2 class="product-name"><a href="/product/{{rs.id}}/{{rs.slug}}">{{rs.title}}</a></h2></td>
+                  <td> <a href="/category/{{rs.category.id}}/{{rs.category.slug}}/">{{rs.category}}</a></td>
+                  <td> <h4>$ {{rs.price }}</h4></td>
+                </tr>
+                {% endfor %}
+              </table>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+{% endblock %}
