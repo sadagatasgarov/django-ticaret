@@ -102,7 +102,7 @@
 							{% if user.id is not None %}
 							<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
 								<div class="header-btns-icon">
-									<i class="fa fa-user-o"></i>
+									<img src="{{request.user.profile.image.url}}">
 								</div>
 								<strong class="text-uppercase">{{user.first_name}} <i class="fa fa-caret-down"></i></strong>
 							</div>
@@ -110,12 +110,13 @@
 							<a href="/login/" class="text-uppercase">Login</a> / <a href="/signup/" class="text-uppercase">Join</a>
 							{% endif %}
 							<ul class="custom-menu">
-								<li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
-								<li><a href="#"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
-								<li><a href="#"><i class="fa fa-exchange"></i> Compare</a></li>
-								<li><a href="#"><i class="fa fa-check"></i> Checkout</a></li>
-								<li><a href="/logout/"><i class="fa fa-unlock-alt"></i> Logout</a></li>
-								<li><a href="#"><i class="fa fa-user-plus"></i> Create An Account</a></li>
+							 <li><a href="/user">User Profile</a></li>
+								<li><a href="/user/orders">My Orders</a></li>
+								<li><a href="/user/orders_product">My Order Product</a></li>
+								<li><a href="/user/comments">My Comments</a></li>
+								<li><a href="/user/favorits">My Favorits</a></li>
+								<li><a href="/user/products">My Products</a></li>
+								<li><a href="/logout">Logout</a></li>
 							</ul>
 						</li>
 						<!-- /Account -->
