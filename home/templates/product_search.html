@@ -33,14 +33,15 @@
 			<!-- row -->
 			<div class="row">
               <table cellpadding="3" width="1300">
+
                 <tr>
                   <th>Image</th>
                   <th>Product Name</th>
                   <th>Category</th>
                   <th>Price</th>
                 </tr>
+                  {% csrf_token %}
                 {% for rs in products %}
-
                 <tr>
                   <td><a href="/product/{{rs.id}}/{{rs.slug}}"></a> <img src="{{rs.image.url}}" alt="" style="max-height: 100px;"></td>
                   <td><h3 class="product-name"><a href="/product/{{rs.id}}/{{rs.slug}}">{{rs.title}}</a></h3></td>

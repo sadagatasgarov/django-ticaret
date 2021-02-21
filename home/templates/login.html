@@ -1,0 +1,69 @@
+{% extends 'homebase.html' %}
+{% block title %} {{ setting.title }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %}{{ setting.keywords }}{% endblock %}
+{% block head %}
+<link rel="icon" type="image/png" href="{{ setting.icon.url}}" />
+{% endblock %}
+
+
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+<!-- BREADCRUMB -->
+<div id="breadcrumb">
+  <div class="container">
+    <ul class="breadcrumb">
+      <li><a href="/"> Anasayfa </a></li>
+      <li class="active">Iletisim</li>
+    </ul>
+  </div>
+</div>
+<!-- /BREADCRUMB -->
+
+<!-- section -->
+<div class="section">
+  <!-- container -->
+  <div class="container">
+    <!-- row -->
+    <div class="row">
+      <div class="col-md-4">
+        <div class="billing-details">
+          <div class="section-title">
+
+            <h3 class="title">Iletisim formu</h3>
+            {% if messages %}
+			{% for message in messages %}
+            <div class="alert alert-{{message.tags}}" role="alert">
+              {{ message }}
+            </div>
+            {% endfor %}
+			{% endif %}
+
+          </div>
+          <form action="" method="POST">
+            <div class="form-group">
+            {% csrf_token %}
+			<div class="form-group">
+                <input class="input" type="text" name="username" placeholder="First Name">
+            </div>
+            <div class="form-group">
+                <input class="input" type="password" name="password" placeholder="Last Name">
+            </div>
+            <input type="submit" value="Giris Yap" />
+          </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <!-- /row -->
+  </div>
+  <!-- /container -->
+</div>
+<!-- /section -->
+{% endblock %}

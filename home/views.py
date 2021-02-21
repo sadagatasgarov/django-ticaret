@@ -1,5 +1,6 @@
 import json
 
+from django.contrib.auth import logout, authenticate, login
 from django.core.checks import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -100,7 +101,7 @@ def product_search(request):
             category = Category.objects.all()
             query = form.cleaned_data['query']
             catid = form.cleaned_data['catid']
-            if catid==0:
+            if catid == 0:
                 products = Product.objects.filter(title__icontains=query)
             else:
                 products = Product.objects.filter(title__icontains=query, category_id=catid)
@@ -125,3 +126,29 @@ def product_search_auto(request):
         data = 'fail'
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            # Redirect to a success page.
+           
+            return HttpResponseRedirect('/')
+        else:
+            # Return an 'invalid login' error message.
+             messages.success(request, "Login hatasi sifre ve ya kullanici adi hatali")
+             return HttpResponseRedirect('/login')
+
+    category = Category.objects.all()
+    context = {'category': category}
+    return render(request, 'login.html', context)
+
