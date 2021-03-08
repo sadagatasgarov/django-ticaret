@@ -1,6 +1,7 @@
 import json
 
 from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.models import User
 from django.core.checks import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -8,7 +9,7 @@ from django.contrib import messages
 # Create your views here.
 import product
 from home.forms import SearchForm, SignupForm
-from home.models import Setting, ContactForm, ContactFormMassage
+from home.models import Setting, ContactForm, ContactFormMassage, UserProfile
 from product.models import Product, Category, Images, Comment
 
 
@@ -85,7 +86,7 @@ def product_detail(request, id, slug):
     category = Category.objects.all()
     product_detail = Product.objects.get(pk=id)
     image = Images.objects.filter(product_id=id)
-    comments = Comment.objects.filter(product_id=id, status=True)
+    comments = Comment.objects.filter(product_id=id)
     context = {'category': category,
                'product_detail': product_detail,
                'image': image,
@@ -156,12 +157,19 @@ def login_view(request):
 def signup_view(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
+
+        user = User()
         if form.is_valid():
             form.save()
             username = request.POST['username']
             password = request.POST['password1']
             user = authenticate(request, username=username, password=password)
             login(request, user)
+            userprofile = UserProfile()
+            userprofile.user_id = request.user.id
+            userprofile.image = "images/users/user.jpg"
+            userprofile.save()
+            messages.success(request, "Basari ile kayit oldunuz")
             return HttpResponseRedirect('/')
 
     form = SignupForm()

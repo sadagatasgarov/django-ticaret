@@ -19,17 +19,15 @@ def addcomment(request, id):
 
         form = CommentForm(request.POST)
         if form.is_valid():
-            current_user = request.user
-
             data = Comment()
-            data.user_id = current_user.id
-            data.product_id = id
             data.subject = form.cleaned_data['subject']
             data.comment = form.cleaned_data['comment']
             data.rate = form.cleaned_data['rate']
             data.ip = request.META.get('REMOTE_ADDR')
+            data.product_id = id
+            current_user = request.user
+            data.user_id = current_user.id
             data.save()
-
             messages.success(request, "formuniz basari ile gonderildi")
             return HttpResponseRedirect(url)
 
