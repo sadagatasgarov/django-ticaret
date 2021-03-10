@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
@@ -38,3 +40,22 @@ def user_update(request):
                    'profile_form': profile_form
                    }
         return render(request, 'user_update.html', context)
+
+
+def user_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)# important
+            messages.success(request, 'Sizin sifreniz guncellendi')
+            return  HttpResponseRedirect('/user')
+        else:
+            messages.error(request, "Please correct the errorr")
+            return HttpResponseRedirect('/user/password')
+    else:
+        category = Category.objects.all()
+        form = PasswordChangeForm(request.user)
+        context = {'form': form,
+                   'category': category}
+    return render(request, 'user_password.html', context)

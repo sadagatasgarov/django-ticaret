@@ -45,6 +45,13 @@
                             </th>
                             <td><img src="{{ profile.image.url }}" style="border-radius: 45px; height: 200px "></td>
                         </tr>
+                                            {% if messages %}
+                        {% for message in messages %}
+                            <div style="color: #d43f3a; font-size: medium">
+                                {{ message|safe }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                         <tr>
                             <th class="text-left">Name Surname</th>
                             <td class="text-left">{{ user.first_name}} {{ user.last_name}} </td>
