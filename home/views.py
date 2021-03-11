@@ -82,7 +82,6 @@ def category_products(request, id, slug):
     return render(request, 'products.html', context)
 
 
-
 def product_detail(request, id, slug):
     category = Category.objects.all()
     product_detail = Product.objects.get(pk=id)
@@ -94,6 +93,18 @@ def product_detail(request, id, slug):
                'comments': comments
                }
     return render(request, 'product_detail.html', context)
+
+
+def content_detail(request, id, slug):
+    category = Category.objects.all()
+    product_detail = Product.objects.filter(category_id=id)
+    link ='/product/' + str(product_detail[0].id) + '/' + product_detail[0].slug
+    context = {'category': category,
+               'product_detail': product_detail,
+               }
+    return HttpResponse(link)
+    return HttpResponseRedirect(link)
+
 
 
 def product_search(request):
