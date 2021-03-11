@@ -49,6 +49,13 @@
 
 {% include 'header.html' %}
 {% block header %}{% endblock %}
+											 {% if messages %}
+												{% for message in messages %}
+            									<div class="alert alert-{{message.tags}}" role="alert">
+              									{{ message }}
+            									</div>
+            									{% endfor %}
+											{% endif %}
 {% block sidebar %}{% endblock %}
 {% block slider %}{% endblock %}
 {% block content %}{% endblock %}

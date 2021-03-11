@@ -26,7 +26,6 @@
 		</div>
 	</div>
 	<!-- /BREADCRUMB -->
-
 	<!-- section -->
 	<div class="section">
 		<!-- container -->
@@ -82,11 +81,14 @@
 
 
 							<div class="product-btns">
+								<form action = "/order/addtocart/{{product_detail.id}}" method="POST">
+									{% csrf_token %}
 								<div class="qty-input">
 									<span class="text-uppercase">QTY: </span>
-									<input class="input" type="number" max="{{product_detail.amount}}" value="1" />
+									<input class="input" type="number" name="quantity" min="0" max="{{product_detail.amount}}" value="1" />
 								</div>
 								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+								</form>
 								<div class="pull-right">
 									<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 									<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
@@ -133,13 +135,7 @@
 										</div>
 
 										<div class="col-md-6">
-											 {% if messages %}
-												{% for message in messages %}
-            									<div class="alert alert-{{message.tags}}" role="alert">
-              									{{ message }}
-            									</div>
-            									{% endfor %}
-											{% endif %}
+
 											<h4 class="text-uppercase">Write Your Review</h4>
 											<p>Your email address will not be published.</p>
 											<form class="review-form" method="post" action="/product/addcomment/{{product_detail.id}}">
